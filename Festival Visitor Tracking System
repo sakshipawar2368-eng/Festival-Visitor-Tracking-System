@@ -1,0 +1,182 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    int M, D, R;
+    int MD, MR, DR, MDR;
+    int choice;
+
+    // Taking input from user
+    cout << "===== FESTIVAL VISITOR TRACKING =====\n\n";
+
+    cout << "Enter number of visitors for Music Shows (M): ";
+    cin >> M;
+
+    cout << "Enter number of visitors for Dance Performances (D): ";
+    cin >> D;
+
+    cout << "Enter number of visitors for Drama Events (R): ";
+    cin >> R;
+
+    cout << "\nEnter visitors attending both Music and Dance (M & D): ";
+    cin >> MD;
+
+    cout << "Enter visitors attending both Music and Drama (M & R): ";
+    cin >> MR;
+
+    cout << "Enter visitors attending both Dance and Drama (D & R): ";
+    cin >> DR;
+
+    cout << "Enter visitors attending all three events (M, D & R): ";
+    cin >> MDR;
+
+    // Principle of Inclusion-Exclusion
+    int uniqueVisitors = M + D + R - MD - MR - DR + MDR;
+
+    // Visitors attending exactly two events
+    int onlyMD = MD - MDR;
+    int onlyMR = MR - MDR;
+    int onlyDR = DR - MDR;
+
+    // Visitors attending only one event
+    int onlyM = M - MD - MR + MDR;
+    int onlyD = D - MD - DR + MDR;
+    int onlyR = R - MR - DR + MDR;
+
+    int exactlyOne = onlyM + onlyD + onlyR;
+    int exactlyTwo = onlyMD + onlyMR + onlyDR;
+    int exactlyThree = MDR;
+
+    do
+    {
+        cout << "\n\n========== MENU ==========\n";
+        cout << "1. Display Event-wise Visitors\n";
+        cout << "2. Display Total Unique Visitors\n";
+        cout << "3. Display Single Event Visitors\n";
+        cout << "4. Display Multiple Event Visitors\n";
+        cout << "5. Display Complete Analysis\n";
+        cout << "6. Display Planning Suggestions\n";
+        cout << "7. Exit\n";
+
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                cout << "\n--- Event-wise Visitors ---\n";
+                cout << "Music Shows       : " << M << endl;
+                cout << "Dance Performances: " << D << endl;
+                cout << "Drama Events      : " << R << endl;
+                break;
+
+            case 2:
+                cout << "\n--- Unique Visitor Calculation ---\n";
+
+                cout << "|M U D U R| = |M| + |D| + |R|"
+                    << " - |M&D| - |M&R| - |D&R|"
+                    << " + |M&D&R|\n\n";
+
+                cout << "= " << M << " + " << D << " + " << R
+                    << " - " << MD << " - " << MR
+                    << " - " << DR << " + " << MDR << endl;
+
+                cout << "\nTotal Unique Visitors = "
+                    << uniqueVisitors << endl;
+                break;
+
+            case 3:
+                cout << "\n--- Single Event Visitors ---\n";
+                cout << "Only Music : " << onlyM << endl;
+                cout << "Only Dance : " << onlyD << endl;
+                cout << "Only Drama : " << onlyR << endl;
+
+                cout << "\nTotal visitors attending exactly one event = "
+                    << exactlyOne << endl;
+                break;
+
+            case 4:
+                cout << "\n--- Multiple Event Visitors ---\n";
+                cout << "Music & Dance only : " << onlyMD << endl;
+                cout << "Music & Drama only : " << onlyMR << endl;
+                cout << "Dance & Drama only : " << onlyDR << endl;
+                cout << "All three events   : " << MDR << endl;
+
+                cout << "\nExactly two events   : "
+                    << exactlyTwo << endl;
+
+                cout << "Exactly three events : "
+                    << exactlyThree << endl;
+                break;
+
+            case 5:
+            {
+                int totalRegistrations = M + D + R;
+                int duplicateCount = totalRegistrations - uniqueVisitors;
+
+                cout << "\n========== COMPLETE ANALYSIS ==========\n";
+
+                cout << "\nEvent Registrations:\n";
+                cout << "Music : " << M << endl;
+                cout << "Dance : " << D << endl;
+                cout << "Drama : " << R << endl;
+
+                cout << "\nSingle Event Visitors:\n";
+                cout << "Only Music : " << onlyM << endl;
+                cout << "Only Dance : " << onlyD << endl;
+                cout << "Only Drama : " << onlyR << endl;
+
+                cout << "\nMultiple Event Visitors:\n";
+                cout << "Music & Dance only : " << onlyMD << endl;
+                cout << "Music & Drama only : " << onlyMR << endl;
+                cout << "Dance & Drama only : " << onlyDR << endl;
+                cout << "All three          : " << MDR << endl;
+
+                cout << "\nTotal Registrations : "
+                    << totalRegistrations << endl;
+
+                cout << "Unique Visitors     : "
+                    << uniqueVisitors << endl;
+
+                cout << "Duplicate Count     : "
+                    << duplicateCount << endl;
+
+                cout << "\nExactly One Event   : "
+                    << exactlyOne << endl;
+
+                cout << "Exactly Two Events  : "
+                    << exactlyTwo << endl;
+
+                cout << "Exactly Three Events: "
+                    << exactlyThree << endl;
+
+                break;
+            }
+
+            case 6:
+                cout << "\n--- Festival Planning Suggestions ---\n";
+                cout << "1. Use unique visitor count for overall "
+                        "crowd management.\n";
+                cout << "2. Use event-wise registrations for "
+                        "seating arrangements.\n";
+                cout << "3. Consider multi-event visitors while "
+                        "planning refreshments.\n";
+                cout << "4. Manage movement between Music, Dance "
+                        "and Drama venues.\n";
+                break;
+
+            case 7:
+                cout << "\nProgram terminated successfully.\n";
+                break;
+
+            default:
+                cout << "\nInvalid choice! Please enter a number "
+                        "from 1 to 7.\n";
+        }
+
+    } while (choice != 7);
+
+    return 0;
+}
